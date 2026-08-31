@@ -2,8 +2,8 @@
 
 An interactive skill tree that visualizes a real learning journey — built with React, styled as a forest of connected skills instead of a generic checklist. Mark topics as not started, in progress, or mastered, and watch dependent skills unlock as their prerequisites are completed.
 
-🔗 Live Demo: _add your Vercel URL here after deploying_
-📦 Repository: _add your GitHub URL here_
+🔗 Live Demo: https://skill-tree-fawn.vercel.app
+📦 Repository: https://github.com/SabaTeradal/SkillTree
 
 ## ✨ Overview
 
@@ -58,7 +58,7 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173 in your browser to view the app.
+
 
 ## 🧪 Usage
 
