@@ -1,0 +1,310 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #0e1a17;
+  --panel: #16241f;
+  --panel-border: #263a32;
+  --text: #ede8dd;
+  --text-muted: #9fb0a8;
+  --gold: #d4a73f;
+  --teal: #4fb3a9;
+  --locked: #3a4a44;
+  --locked-border: #4a5c54;
+
+  --font-display: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 3rem 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- Header ---------- */
+
+.app-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--panel-border);
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  font-size: 0.9rem;
+  color: var(--teal);
+  letter-spacing: 0.02em;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.progress-block {
+  flex: 1;
+  max-width: 320px;
+  min-width: 220px;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--locked);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  transition: width 0.4s ease;
+}
+
+.progress-label {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.reset-button {
+  background: transparent;
+  border: 1px solid var(--panel-border);
+  color: var(--text-muted);
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-size: 0.85rem;
+}
+
+.reset-button:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+/* ---------- Main layout ---------- */
+
+.app-main {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Tree canvas ---------- */
+
+.tree-canvas {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.tree-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.tree-line {
+  fill: none;
+  stroke: var(--locked-border);
+  stroke-width: 1.5;
+}
+
+.tree-line.active {
+  stroke: var(--gold);
+  stroke-width: 2;
+}
+
+.tree-tier {
+  position: relative;
+}
+
+.tree-tier-label {
+  font-size: 0.78rem;
+  text-transform: none;
+  color: var(--text-muted);
+  margin-bottom: 0.9rem;
+  font-family: var(--font-body);
+}
+
+.tree-tier-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* ---------- Skill node ---------- */
+
+.skill-node {
+  position: relative;
+  z-index: 1;
+  min-width: 168px;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--locked-border);
+  background: var(--panel);
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.skill-node-name {
+  font-weight: 500;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.skill-node-status {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.skill-node.status-in-progress {
+  border-color: var(--teal);
+}
+
+.skill-node.status-in-progress .skill-node-status {
+  color: var(--teal);
+}
+
+.skill-node.status-done {
+  border-color: var(--gold);
+  background: #1c2620;
+}
+
+.skill-node.status-done .skill-node-status {
+  color: var(--gold);
+}
+
+.skill-node.is-unlockable:not(.status-done) {
+  border-style: dashed;
+}
+
+.skill-node.is-selected {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.skill-node:hover {
+  border-color: var(--teal);
+}
+
+/* ---------- Detail panel ---------- */
+
+.detail-panel {
+  position: sticky;
+  top: 2rem;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.detail-empty p {
+  color: var(--text-muted);
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.detail-tier {
+  margin: 0 0 0.3rem;
+  color: var(--teal);
+  font-size: 0.8rem;
+}
+
+.detail-panel h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.4rem;
+}
+
+.detail-description {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+.detail-prereqs {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.detail-locked-note {
+  font-size: 0.85rem;
+  color: var(--gold);
+  margin: 0;
+}
+
+.detail-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-actions button {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid var(--panel-border);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+.detail-actions button.active {
+  border-color: var(--gold);
+  color: var(--text);
+  background: #1c2620;
+}
+
+.detail-actions button:hover {
+  border-color: var(--teal);
+}
